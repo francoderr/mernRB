@@ -1,5 +1,5 @@
 import { CircularProgress, Grid } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { postsSelector } from '../../features/posts/postsSlice.js'
 import Post from './Post/Post.js'
@@ -7,12 +7,15 @@ import useStyles from './styles'
 
 
 
-
-
 const Posts = ({ setCurrentId }) => {
     const classes = useStyles()
 
     const posts = useSelector(postsSelector)
+
+    useEffect(() => {
+      console.log('loading...posts changed')
+    }, [posts])
+    
 
     console.log('posts selected from redux ', posts.posts)
 

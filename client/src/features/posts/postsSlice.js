@@ -22,11 +22,18 @@ const postsSlice = createSlice({
                 post.id === payload.id ? post = payload : post = post
             })
         },
+        deleter: (state, { payload }) => {
+            state.posts = state.posts.filter(post => {
+                if(post.id !== payload) {
+                    return post
+                }
+            })
+        },
     },
 });
 
 // Three actions generated from the slice
-export const { fetch_all, create, update } =
+export const { fetch_all, create, update, deleter } =
     postsSlice.actions;
 
 // A selector
@@ -68,13 +75,25 @@ export function createPost(payload) {
 }
 
 export function updatePost(payload) {
-    console.log(`current id in redux`, payload.id)
+    // console.log(`current id in redux`, payload.id)
     return async (dispatch) => {
         try {
             const data = await Axios.patch(`http://localhost:5000/posts/${payload.id}`,
             payload.data
             )
             dispatch(update(data));
+        } catch (error) {
+            // dispatch(getCircleLoansFailure());
+            console.log('reason for failure to create post', error)
+        }
+    };
+}
+
+export function deletePost(payload) {
+    return async (dispatch) => {
+        try {
+            await Axios.delete(`http://localhost:5000/posts/${payload}`)
+            dispatch(deleter(payload));
         } catch (error) {
             // dispatch(getCircleLoansFailure());
             console.log('reason for failure to create post', error)

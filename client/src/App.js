@@ -6,9 +6,11 @@ import Posts from './components/Posts/Posts.js'
 import Form from './components/Form/Form.js'
 
 import useStyles from './styles'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { getPosts } from './features/posts/postsSlice'
+import { getPosts, postsSelector } from './features/posts/postsSlice'
+
+
 
 function App() {
 
@@ -20,8 +22,8 @@ function App() {
 
   useEffect(() => {
     dispatch(getPosts())
-  }, [])
-  
+  })
+
 
   return (
     <Container maxwidth='lg'>

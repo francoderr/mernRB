@@ -7,8 +7,14 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import moment from 'moment'
+import { useDispatch } from 'react-redux'
+import { deletePost } from '../../../features/posts/postsSlice'
+
+
 
 const Post = ({ post, setCurrentId }) => {  // destructured the props
+
+  const dispatch = useDispatch()
 
   const classes = useStyles()
 
@@ -45,7 +51,7 @@ const Post = ({ post, setCurrentId }) => {  // destructured the props
           Like
           {post.likeCount}
         </Button>
-        <Button size="small" color="primary" onClick={() => { }}>
+        <Button size="small" color="primary" onClick={() => {dispatch(deletePost(post._id)) }}>
           <DeleteIcon fontSize='small' />
           Delete
         </Button>
