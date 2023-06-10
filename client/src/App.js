@@ -6,9 +6,9 @@ import Posts from './components/Posts/Posts.js'
 import Form from './components/Form/Form.js'
 
 import useStyles from './styles'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
-import { getPosts, postsSelector } from './features/posts/postsSlice'
+import { getPosts } from './features/posts/postsSlice'
 
 
 
@@ -22,7 +22,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getPosts())
-  })
+  }, [currentId, dispatch])
 
 
   return (
@@ -33,7 +33,7 @@ function App() {
       </AppBar>
       <Grow in>
         <Container>
-          <Grid container justifyContent ="space-between" alignItems="stretch" spacing={3}>
+          <Grid className={classes.mainContainer} container justifyContent ="space-between" alignItems="stretch" spacing={3}>
             <Grid item xs={12} sm={7}>
               <Posts setCurrentId={setCurrentId} />
             </Grid>

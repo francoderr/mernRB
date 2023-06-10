@@ -3,7 +3,7 @@ import Axios from "axios";
 // import * as api from '../../api'
 
 export const initialState = {
-    posts: "",
+    posts: [],
 };
 
 // A slice for recipes with our three reducers
@@ -50,7 +50,8 @@ export function getPosts() {
         try {
             const data = await Axios.get('http://localhost:5000/posts')
             dispatch(fetch_all(data.data));
-            // console.log(`done setting state to : ${data.data}`)
+            // console.log("below is the data we setting to state")
+            // console.log(JSON.stringify(data.data))
         } catch (error) {
             // dispatch(getCircleLoansFailure());
             console.log('reason for failure to fetch posts', error)
@@ -84,7 +85,21 @@ export function updatePost(payload) {
             dispatch(update(data));
         } catch (error) {
             // dispatch(getCircleLoansFailure());
-            console.log('reason for failure to create post', error)
+            console.log('reason for failure to update post', error)
+        }
+    };
+}
+
+export function likePost(payload) {
+    // console.log(`current id in redux`, payload.id)
+    return async (dispatch) => {
+        try {
+            const data = await Axios.patch(`http://localhost:5000/posts/${payload}/like`,
+            )
+            dispatch(update(data));
+        } catch (error) {
+            // dispatch(getCircleLoansFailure());
+            console.log('reason for failure to update post', error)
         }
     };
 }
@@ -96,7 +111,7 @@ export function deletePost(payload) {
             dispatch(deleter(payload));
         } catch (error) {
             // dispatch(getCircleLoansFailure());
-            console.log('reason for failure to create post', error)
+            console.log('reason for failure to delete post', error)
         }
     };
 }
